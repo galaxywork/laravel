@@ -1,6 +1,6 @@
 {
-    "name": "galaxywork/base",
-    "description": "dev docker env",
+    "name": "galaxywork/laravel",
+    "description": "dev docker env for laravel",
     "type": "project",
     "license": "MIT",
     "authors": [
