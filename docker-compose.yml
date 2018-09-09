@@ -1,0 +1,29 @@
+version: "3"
+services:
+
+  app:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-php_apache
+    volumes:
+      - "./app:/var/www/html"
+    ports:
+      - "8666:80"
+    links:
+      - db
+    environment:
+      APP_ENVIRONMENT: 'development'
+
+  db:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-mariadb
+    ports:
+      - "3666:3306"
+    volumes:
+      - "./db:/docker-entrypoint-initdb.d"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root_password'
+      MYSQL_DATABASE: 'demo'
+      MYSQL_USER: 'demo'
+      MYSQL_PASSWORD: 'demo'

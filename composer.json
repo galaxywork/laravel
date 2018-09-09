@@ -1,0 +1,14 @@
+{
+    "name": "galaxywork/base",
+    "description": "dev docker env",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "seven",
+            "email": "415107564@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

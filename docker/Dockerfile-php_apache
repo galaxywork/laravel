@@ -1,0 +1,36 @@
+FROM php:7.2-apache
+MAINTAINER Seven Zhang <galaxywork@qq.com>
+
+# all ext list https://gist.github.com/chronon/95911d21928cff786e306c23e7d1d3f3
+
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+        supervisor \
+        vim \
+    && docker-php-ext-install -j$(nproc) iconv \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd
+
+RUN docker-php-ext-install -j$(nproc) mysqli \
+	&& docker-php-ext-install -j$(nproc) pdo_mysql \
+	&& docker-php-ext-install -j$(nproc) mbstring 
+
+RUN pecl install redis-4.0.1 \
+    && pecl install xdebug-2.6.0 \
+    && docker-php-ext-enable redis xdebug
+
+
+RUN a2enmod rewrite
+
+ADD php_apache/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
+
+ADD php_apache/rc.local /etc/rc.local
+RUN chmod +x /etc/rc.local
+
+COPY php_apache/php.development.ini /usr/local/etc/php/php.development.ini
+
+ADD php_apache/ApacheConfig.development.conf /etc/apache2/sites-enabled/000-default.conf
+
+ADD php_apache/cron /cron
