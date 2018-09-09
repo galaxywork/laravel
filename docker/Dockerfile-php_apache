@@ -29,7 +29,7 @@ ADD php_apache/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 ADD php_apache/rc.local /etc/rc.local
 RUN chmod +x /etc/rc.local
 
-COPY php_apache/php.development.ini /usr/local/etc/php/php.development.ini
+COPY php_apache/php.development.ini /usr/local/etc/php/7.1/conf.d/php.development.ini
 
 ADD php_apache/ApacheConfig.development.conf /etc/apache2/sites-enabled/000-default.conf
 
