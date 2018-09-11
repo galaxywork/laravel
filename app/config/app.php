@@ -147,6 +147,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Reliese\Coders\CodersServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
