@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 class CrudGenerator extends Command
 {
@@ -12,7 +12,7 @@ class CrudGenerator extends Command
      *
      * @var string
      */
-    protected $signature = 'crud:generator {model}';
+    protected $signature = 'crud:generator {model} {table-name}';
 
     /**
      * The console command description.
@@ -38,11 +38,27 @@ class CrudGenerator extends Command
      */
     public function handle()
     {
-        $name = $this->argument('model');
+        $modelName = $this->argument('model');
+        $tableName = $this->argument('table-name');
 
-        $this->controller($name);
-        $this->model($name);
-        $this->request($name);
+        Artisan::call('code:models', [
+            '--table' => $tableName
+        ]);
+        $this->info(Artisan::output());
+
+        Artisan::call('infyom:api', [
+            'model'     => $modelName,
+            '--fromTable' => 1,
+            '--tableName' => $tableName,
+            '--skip' => 'model'
+        ]);
+
+        $this->info(Artisan::output());
+
+
+//        $this->controller($name);
+//        $this->model($name);
+//        $this->request($name);
 
 //        File::append(base_path('routes/api.php'),
 //            'Route::resource(\'' . strtolower($name) . "', '{$name}Controller');");
